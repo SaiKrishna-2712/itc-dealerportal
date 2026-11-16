@@ -1,7 +1,242 @@
-<mvc:View controllerName="com.itc.dealerportal.controller.App"
-    displayBlock="true"
+<mvc:View
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <App id="app">
-    </App>
+    xmlns="sap.m"
+    xmlns:tnt="sap.tnt"
+    controllerName="com.itc.dealerportal.controller.App"
+    displayBlock="true"
+    height="100%">
+
+    <tnt:ToolPage
+        id="toolPage"
+        class="sapUiDemoToolPage">
+
+        <!-- ================= HEADER ================= -->
+
+        <tnt:header>
+
+            <tnt:ToolHeader
+                id="shellLikeToolHeader"
+                class="toolHeaderCss">
+
+                <Button
+                    id="sideNavigationToggleButton"
+                    icon="sap-icon://menu2"
+                    type="Transparent"
+                    press=".onMenuButtonPress"
+                    tooltip="Menu">
+
+                    <layoutData>
+                        <OverflowToolbarLayoutData
+                            priority="NeverOverflow"/>
+                    </layoutData>
+
+                </Button>
+
+                <Image
+                    src="./images/Group.svg"
+                    decorative="true"
+                    tooltip="Dealer Portal"
+                    width="60px"
+                    height="30px">
+
+                    <layoutData>
+                        <OverflowToolbarLayoutData
+                            priority="NeverOverflow"/>
+                    </layoutData>
+
+                </Image>
+
+                <Title
+                    id="productName"
+                    text="Dealer Portal"
+                    wrapping="false"
+                    class="mainTitleCss">
+
+                    <layoutData>
+                        <OverflowToolbarLayoutData
+                            priority="Disappear"/>
+                    </layoutData>
+
+                </Title>
+
+                <ToolbarSpacer/>
+
+                <Button
+                    id="notificationButton"
+                    icon="sap-icon://bell"
+                    type="Transparent"
+                    tooltip="Notifications">
+
+                    <layoutData>
+                        <OverflowToolbarLayoutData
+                            priority="NeverOverflow"/>
+                    </layoutData>
+
+                </Button>
+
+                <tnt:ToolHeaderUtilitySeparator/>
+
+                <Avatar
+                    id="profileAvatar"
+                    displaySize="XS"
+                    tooltip="Profile"
+                    press=".onAvatarPressed">
+
+                    <layoutData>
+                        <OverflowToolbarLayoutData
+                            priority="NeverOverflow"/>
+                    </layoutData>
+
+                </Avatar>
+
+            </tnt:ToolHeader>
+
+        </tnt:header>
+
+
+        <!-- ================= SIDE NAVIGATION ================= -->
+
+        <tnt:sideContent>
+
+            <tnt:SideNavigation
+                id="sideNavigation"
+                expanded="{mAppViewModel>/isMenuExpanded}"
+                selectedKey="{mAppViewModel>/selectedKey}"
+                itemSelect=".onItemSelect">
+
+                <tnt:NavigationList>
+
+                    <!-- HOME -->
+
+                    <tnt:NavigationListItem
+                        key="RouteHome"
+                        text="Home"
+                        icon="sap-icon://home"/>
+
+
+                    <!-- FINANCE -->
+
+                    <tnt:NavigationListItem
+                        key="finance"
+                        text="Finance"
+                        icon="sap-icon://expense-report"
+                        selectable="false">
+
+                        <tnt:NavigationListItem
+                            key="RoutePaymentOverview"
+                            text="Payment Overview"/>
+
+                        <tnt:NavigationListItem
+                            key="payments"
+                            text="Payments"/>
+
+                        <tnt:NavigationListItem
+                            key="invoiceStatus"
+                            text="Invoice Status"/>
+
+                        <tnt:NavigationListItem
+                            key="claims"
+                            text="Claims"/>
+
+                        <tnt:NavigationListItem
+                            key="claimsOverview"
+                            text="Claims Overview"/>
+
+                    </tnt:NavigationListItem>
+
+
+                    <!-- SALES ORDER -->
+
+                    <tnt:NavigationListItem
+                        key="salesOrder"
+                        text="Sales Order"
+                        icon="sap-icon://bar-chart"
+                        selectable="false">
+
+                        <tnt:NavigationListItem
+                            key="salesOrderManagement"
+                            text="Sales Order Management"/>
+
+                        <tnt:NavigationListItem
+                            key="orderEnquiry"
+                            text="Create Order Enquiry"/>
+
+                        <tnt:NavigationListItem
+                            key="createSalesOrder"
+                            text="Create Sales Order"/>
+
+                        <tnt:NavigationListItem
+                            key="dispatch"
+                            text="Dispatch"/>
+
+                        <tnt:NavigationListItem
+                            key="deliveryConfirmation"
+                            text="Delivery Confirmation"/>
+
+                        <tnt:NavigationListItem
+                            key="stockLotApplication"
+                            text="Stock Lot Application"/>
+
+                    </tnt:NavigationListItem>
+
+
+                    <!-- REPORT -->
+
+                    <tnt:NavigationListItem
+                        key="report"
+                        text="Report"
+                        icon="sap-icon://calendar"
+                        selectable="false">
+
+                        <tnt:NavigationListItem
+                            key="dealerFGStock"
+                            text="Dealer FG Stock"/>
+
+                        <tnt:NavigationListItem
+                            key="invoiceDnCn"
+                            text="Invoice / DN / CN"/>
+
+                        <tnt:NavigationListItem
+                            key="testCertificate"
+                            text="Test Certificate"/>
+
+                        <tnt:NavigationListItem
+                            key="complaintStatus"
+                            text="Complaint Status"/>
+
+                    </tnt:NavigationListItem>
+
+                </tnt:NavigationList>
+
+
+                <!-- ================= FIXED ITEM ================= -->
+
+                <tnt:fixedItem>
+
+                    <tnt:NavigationList>
+
+                        <tnt:NavigationListItem
+                            key="support"
+                            text="Support"
+                            icon="sap-icon://headset"/>
+
+                    </tnt:NavigationList>
+
+                </tnt:fixedItem>
+
+            </tnt:SideNavigation>
+
+        </tnt:sideContent>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+
+        <tnt:mainContents>
+
+            <App id="mainContents"/>
+
+        </tnt:mainContents>
+
+    </tnt:ToolPage>
+
 </mvc:View>

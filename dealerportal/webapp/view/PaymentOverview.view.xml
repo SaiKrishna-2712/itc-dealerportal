@@ -1,0 +1,7 @@
+<mvc:View controllerName="com.itc.dealerportal.controller.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="idPymntOVPage" showHeader="false">
+        <Title text="Payment Overview"></Title>
+    </Page>
+</mvc:View>

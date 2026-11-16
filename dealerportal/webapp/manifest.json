@@ -33,12 +33,13 @@
     }
   },
   "sap.ui5": {
-    "flexEnabled": true,
+    "flexEnabled": false,
     "dependencies": {
       "minUI5Version": "1.154.0",
       "libs": {
         "sap.m": {},
-        "sap.ui.core": {}
+        "sap.ui.core": {},
+        "sap.tnt": {}
       }
     },
     "contentDensities": {
@@ -51,6 +52,9 @@
         "settings": {
           "bundleName": "com.itc.dealerportal.i18n.i18n"
         }
+      },
+      "mAppViewModel": {
+        "type": "sap.ui.model.json.JSONModel"
       }
     },
     "resources": {
@@ -64,7 +68,7 @@
       "config": {
         "routerClass": "sap.m.routing.Router",
         "controlAggregation": "pages",
-        "controlId": "app",
+        "controlId": "mainContents",
         "transition": "slide",
         "type": "View",
         "viewType": "XML",
@@ -79,12 +83,23 @@
           "target": [
             "TargetHome"
           ]
+        },
+        {
+          "name": "RoutePaymentOverview",
+          "pattern": "paymentoverview",
+          "target": [
+            "TargetPaymentOverView"
+          ]
         }
       ],
       "targets": {
         "TargetHome": {
-          "id": "Home",
+          "id": "idHomePage",
           "name": "Home"
+        },
+        "TargetPaymentOverView": {
+          "id": "idPymntOVPage",
+          "name": "PaymentOverview"
         }
       }
     },

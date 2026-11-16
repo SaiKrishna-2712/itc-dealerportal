@@ -1,6 +1,7 @@
 <mvc:View controllerName="com.itc.dealerportal.controller.Home"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
+    <Page id="idHomePage" showHeader="false">
+        <Title text="Home Page"></Title>
     </Page>
 </mvc:View>
