@@ -16,3 +16,105 @@
 .mainVBoxCss {
     height: 100%;
 }
+
+.dpPaymentOverview { background: #eef1f6; }
+
+.dpPaymentOverview .dpHeader {
+  background: #fff;
+  padding: 1rem 1.5rem 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.dpPaymentOverview .dpTitleBar.sapMTB,
+.dpPaymentOverview .dpFilterBar.sapMTB {
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.dpPaymentOverview .dpTitleBar.sapMTB { margin-bottom: 0.75rem; }
+
+.dpPaymentOverview .dpLastUpdated .sapMText {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  color: #556b82;
+  text-align: right;
+}
+
+.dpPaymentOverview .dpTitleBar .sapMBtn .sapMBtnInner,
+.dpPaymentOverview .dpFilterBar .sapMBtn:not(.sapMBtnEmphasized) .sapMBtnInner {
+  border: 1px solid var(--sapButton_BorderColor);
+}
+
+.dpPaymentOverview .dpBody {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1rem 1.5rem 1.5rem;
+}
+
+.dpPaymentOverview .sapFCard {
+  height: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dpPaymentOverview .dpKpiBlue,
+.dpPaymentOverview .dpKpiBlue .sapFCardHeader { --sapTile_Background: #e3f0fb; background: #e3f0fb; }
+.dpPaymentOverview .dpKpiRed,
+.dpPaymentOverview .dpKpiRed .sapFCardHeader { --sapTile_Background: #fdecec; background: #fdecec; }
+.dpPaymentOverview .dpKpiOrange,
+.dpPaymentOverview .dpKpiOrange .sapFCardHeader { --sapTile_Background: #fff3e2; background: #fff3e2; }
+.dpPaymentOverview .dpKpiGreen,
+.dpPaymentOverview .dpKpiGreen .sapFCardHeader { --sapTile_Background: #e6f5ea; background: #e6f5ea; }
+.dpPaymentOverview .dpKpiRed { border: 1px solid #c9252d; }
+
+.dpPaymentOverview .dpKpiGrid .sapMNCValueScr,
+.dpPaymentOverview .dpKpiGrid .sapMNCValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.dpPaymentOverview .dpCard .sapFCardHeader {
+  min-height: 0;
+  border-bottom: 1px solid #d9d9d9;
+}
+.dpPaymentOverview .dpCard .sapFCardHeaderContent {
+  min-height: 0;
+  padding: 0.5rem 0.25rem;
+}
+
+.dpPaymentOverview .dpDocTable.sapMList { padding: 0 1rem 1.5rem; }
+.dpPaymentOverview .dpDocTable thead th { height: 2.5rem; padding: 0.5rem 0.75rem; }
+.dpPaymentOverview .dpDocTable tr.sapMListTblRow { height: 2.5rem; }
+.dpPaymentOverview .dpDocTable .sapMListTblCell { padding: 0.5rem 0.75rem; }
+.dpPaymentOverview .dpDocTable .dpTotalRow { border-top: 1px solid #89919a; }
+.dpPaymentOverview .dpDocTable .dpTotalRow .sapMText,
+.dpPaymentOverview .dpDocTable .dpTotalRow .sapMObjStatus,
+.dpPaymentOverview .dpDocTable .dpTotalRow .sapMObjStatusText { font-weight: 700; }
+
+.dpPaymentOverview .dpAgingList { padding-top: 0.5rem; }
+.dpPaymentOverview .dpAgingRow { padding: 0.875rem 1rem; }
+.dpPaymentOverview .dpAgingLabel { font-size: 0.75rem; font-weight: 600; }
+.dpPaymentOverview .dpAgingAmount { justify-self: end; font-size: 0.75rem; }
+.dpPaymentOverview .dpAgingBar { background: transparent; border: none; }
+.dpPaymentOverview .dpAgingBar .sapMPIBarRemaining,
+.dpPaymentOverview .dpAgingBar .sapMPIBar::after,
+.dpPaymentOverview .dpAgingBar .sapMPIBar::before { display: none; }
+.dpPaymentOverview .dpAgingBar .sapMPIBar { background: #2e7d32; border-radius: 0.25rem; }
+.dpPaymentOverview .dpAgingBar[data-state="Warning"] .sapMPIBar { background: #e9730c; }
+.dpPaymentOverview .dpAgingBar[data-state="Error"] .sapMPIBar { background: #b00000; }
+
+
+@media (max-width: 1200px) {
+  .dpPaymentOverview .dpKpiGrid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .dpPaymentOverview .dpMainGrid { grid-template-columns: minmax(0, 1fr) !important; }
+}
+
+@media (max-width: 600px) {
+  .dpPaymentOverview .dpKpiGrid { grid-template-columns: minmax(0, 1fr) !important; }
+  .dpPaymentOverview .dpTitleBar,
+  .dpPaymentOverview .dpFilterBar { padding-left: 1rem; padding-right: 1rem; }
+  .dpPaymentOverview .dpBody { padding: 0.75rem 1rem 1rem; }
+}

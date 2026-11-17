@@ -1,23 +1,34 @@
 sap.ui.define([
   "sap/ui/core/mvc/Controller"
-], (BaseController) => {
+], (Controller) => {
   "use strict";
 
-  return BaseController.extend("com.itc.dealerportal.controller.BaseController", {
-    onMenuButtonPress: function (oEvent) {
-      var mAppViewModel = this.getOwnerComponent().getModel("mAppViewModel");
-      var bIsMenuExpanded = mAppViewModel.getProperty("/isMenuExpanded");
-      mAppViewModel.setProperty("/isMenuExpanded", !bIsMenuExpanded);
-    },
-    onItemSelect: function (oEvent) {
-      const oItem = oEvent.getParameter("item");
-      const sKey = oItem.getKey();
+  return Controller.extend("com.itc.dealerportal.controller.BaseController", {
 
-      if (!sKey) {
+    getRouter() {
+      return this.getOwnerComponent().getRouter();
+    },
+
+    getModel(sName) {
+      return this.getView().getModel(sName) || this.getOwnerComponent().getModel(sName);
+    },
+
+    getText(sKey, aArgs) {
+      return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(sKey, aArgs);
+    },
+
+    onMenuButtonPress() {
+      const oModel = this.getModel("mAppViewModel");
+      oModel.setProperty("/isMenuExpanded", !oModel.getProperty("/isMenuExpanded"));
+    },
+
+    onItemSelect(oEvent) {
+      const sKey = oEvent.getParameter("item").getKey();
+
+      if (!sKey || !this.getRouter().getRoute(sKey)) {
         return;
       }
-
-      this.getOwnerComponent().getRouter().navTo(sKey);
+      this.getRouter().navTo(sKey);
     }
   });
 });

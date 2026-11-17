@@ -1,0 +1,86 @@
+{
+    "lastUpdated": "20 Oct 2026, 10:45 AM",
+    "kpi": {
+        "totalOutstanding": 41963298.31,
+        "overdueAmount": 42849776.31,
+        "dueNext7Days": 0,
+        "pendingConfirmation": 183972480
+    },
+    "docTypes": [
+        {
+            "docType": "Invoice",
+            "notDue": 875977,
+            "overdue": 24928428,
+            "total": 25804403,
+            "isTotal": false
+        },
+        {
+            "docType": "Debit Note",
+            "notDue": 10500,
+            "overdue": 85378,
+            "total": 95878,
+            "isTotal": false
+        },
+        {
+            "docType": "Credit Note",
+            "notDue": 0,
+            "overdue": -2784931.12,
+            "total": -2784931.12,
+            "isTotal": false
+        },
+        {
+            "docType": "Advance",
+            "notDue": 0,
+            "overdue": -81664847,
+            "total": -81664847,
+            "isTotal": false
+        },
+        {
+            "docType": "Others (Debit)",
+            "notDue": 0,
+            "overdue": 0,
+            "total": 0,
+            "isTotal": false
+        },
+        {
+            "docType": "Others (Credit)",
+            "notDue": 0,
+            "overdue": 0,
+            "total": 0,
+            "isTotal": false
+        },
+        {
+            "docType": "Total",
+            "notDue": 888477,
+            "overdue": -42849776.31,
+            "total": -41963298.31,
+            "isTotal": true
+        }
+    ],
+    "aging": [
+        {
+            "label": "0 - 30 Days",
+            "amount": 0,
+            "percent": 55,
+            "state": "Success"
+        },
+        {
+            "label": "31 - 60 Days",
+            "amount": 24481,
+            "percent": 48,
+            "state": "Warning"
+        },
+        {
+            "label": "61 - 90 Days",
+            "amount": 0,
+            "percent": 100,
+            "state": "Warning"
+        },
+        {
+            "label": "90 Days & Above",
+            "amount": 49854341,
+            "percent": 82,
+            "state": "Error"
+        }
+    ]
+}

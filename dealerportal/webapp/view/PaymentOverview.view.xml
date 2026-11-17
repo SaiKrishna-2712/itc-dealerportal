@@ -1,7 +1,184 @@
-<mvc:View controllerName="com.itc.dealerportal.controller.Home"
+<mvc:View
+    controllerName="com.itc.dealerportal.controller.PaymentOverview"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="idPymntOVPage" showHeader="false">
-        <Title text="Payment Overview"></Title>
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns="sap.m"
+    core:require="{ formatter: 'com/itc/dealerportal/model/formatter' }">
+
+    <Page id="idPymntOVPage" class="dpPaymentOverview" showHeader="false" backgroundDesign="Transparent">
+        <content>
+
+           <VBox class="dpHeader" renderType="Bare">
+
+            <Toolbar class="dpTitleBar">
+                <Title text="{i18n>paymentOverviewTitle}" titleStyle="H3"/>
+                <ToolbarSpacer/>
+                <VBox alignItems="End" class="dpLastUpdated">
+                    <Text text="{i18n>lastUpdated}"/>
+                    <Text text="{payment>/lastUpdated}"/>
+                </VBox>
+                <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+                <Button icon="sap-icon://download" text="{i18n>export}" type="Emphasized"/>
+            </Toolbar>
+
+            <Toolbar class="dpFilterBar">
+                <Select
+                    width="14rem"
+                    forceSelection="true"
+                    selectedKey="{filter>/distributor}"
+                    items="{filter>/distributors}">
+                    <core:Item key="{filter>key}" text="{filter>name}"/>
+                </Select>
+                <DatePicker
+                    width="11rem"
+                    placeholder="{i18n>fromDate}"
+                    value="{filter>/fromDate}"
+                    valueFormat="yyyy-MM-dd"
+                    displayFormat="dd MMM yyyy"/>
+                <DatePicker
+                    width="11rem"
+                    placeholder="{i18n>toDate}"
+                    value="{filter>/toDate}"
+                    valueFormat="yyyy-MM-dd"
+                    displayFormat="dd MMM yyyy"/>
+                <ToolbarSpacer/>
+                <Button text="{i18n>applyFilter}" type="Emphasized" press=".onApplyFilter"/>
+                <Button text="{i18n>reset}" press=".onResetFilter"/>
+            </Toolbar>
+
+        </VBox>
+
+            <grid:CSSGrid class="dpBody" gridTemplateColumns="minmax(0, 1fr)" gridGap="1rem">
+
+                <MessageStrip
+                    text="{i18n>overdueMessage}"
+                    enableFormattedText="true"
+                    showIcon="true"
+                    type="Information"/>
+
+                <grid:CSSGrid class="dpKpiGrid" gridTemplateColumns="repeat(4, minmax(0, 1fr))" gridGap="1rem">
+                    <f:Card class="dpKpiBlue">
+                        <f:header>
+                            <card:NumericHeader
+                                title="{i18n>kpiTotalOutstanding}"
+                                subtitle="{i18n>kpiTotalOutstandingDesc}"
+                                number="{path:'payment>/kpi/totalOutstanding', formatter:'formatter.rupee'}"
+                                numberSize="S"/>
+                        </f:header>
+                    </f:Card>
+                    <f:Card class="dpKpiRed">
+                        <f:header>
+                            <card:NumericHeader
+                                title="{i18n>kpiOverdue}"
+                                subtitle="{i18n>kpiOverdueDesc}"
+                                number="{path:'payment>/kpi/overdueAmount', formatter:'formatter.rupee'}"
+                                numberSize="S"
+                                state="Error"/>
+                        </f:header>
+                    </f:Card>
+                    <f:Card class="dpKpiOrange">
+                        <f:header>
+                            <card:NumericHeader
+                                title="{i18n>kpiDue7}"
+                                subtitle="{i18n>kpiDue7Desc}"
+                                number="{path:'payment>/kpi/dueNext7Days', formatter:'formatter.rupee'}"
+                                numberSize="S"/>
+                        </f:header>
+                    </f:Card>
+                    <f:Card class="dpKpiGreen">
+                        <f:header>
+                            <card:NumericHeader
+                                title="{i18n>kpiPending}"
+                                subtitle="{i18n>kpiPendingDesc}"
+                                number="{path:'payment>/kpi/pendingConfirmation', formatter:'formatter.rupee'}"
+                                numberSize="S"/>
+                        </f:header>
+                    </f:Card>
+                </grid:CSSGrid>
+
+                <grid:CSSGrid class="dpMainGrid" gridTemplateColumns="minmax(0, 2fr) minmax(0, 1fr)" gridGap="1rem">
+
+                    <f:Card class="dpCard">
+                        <f:header>
+                            <card:Header title="{i18n>itemsByDocType}"/>
+                        </f:header>
+                        <f:content>
+                            <Table
+                                class="dpDocTable"
+                                items="{payment>/docTypes}"
+                                updateFinished=".onDocTableUpdate">
+                                <columns>
+                                    <Column><Text text="{i18n>colDocType}"/></Column>
+                                    <Column hAlign="End"><Text text="{i18n>colNotDue}"/></Column>
+                                    <Column hAlign="End"><Text text="{i18n>colOverdue}"/></Column>
+                                    <Column hAlign="End"><Text text="{i18n>colTotal}"/></Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <ObjectIdentifier title="{payment>docType}"/>
+                                            <Text text="{path:'payment>notDue', formatter:'formatter.amount'}"/>
+                                            <ObjectStatus
+                                                text="{path:'payment>overdue', formatter:'formatter.amount'}"
+                                                state="{path:'payment>overdue', formatter:'formatter.overdueState'}"/>
+                                            <Text text="{path:'payment>total', formatter:'formatter.amount'}"/>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </f:content>
+                    </f:Card>
+
+                    <f:Card class="dpCard">
+                        <f:header>
+                            <card:Header title="{i18n>agingTitle}"/>
+                        </f:header>
+                        <f:content>
+                            <VBox justifyContent="SpaceBetween" height="100%">
+                                <List class="dpAgingList" items="{payment>/aging}" showSeparators="Inner">
+                                    <CustomListItem>
+                                        <grid:CSSGrid
+                                            class="dpAgingRow"
+                                            gridTemplateColumns="7rem minmax(0, 1fr) 6.5rem"
+                                            gridGap="0.75rem" 
+                                            >
+                                            <ObjectStatus
+                                                class="dpAgingLabel"
+                                                text="{payment>label}"
+                                                state="{payment>textState}"/>
+                                            <ProgressIndicator
+                                                class="dpAgingBar"
+                                                percentValue="{payment>percent}"
+                                                showValue="false"
+                                                displayOnly="true"
+                                                height="0.5rem">
+                                                <customData>
+                                                    <core:CustomData key="state" value="{payment>state}" writeToDom="true"/>
+                                                </customData>
+                                            </ProgressIndicator>
+                                            <ObjectStatus
+                                                class="dpAgingAmount"
+                                                text="{path:'payment>amount', formatter:'formatter.rupee'}"
+                                                state="{payment>textState}"/>
+                                        </grid:CSSGrid>
+                                    </CustomListItem>
+                                </List>
+                                <MessageStrip
+                                    class="sapUiSmallMargin"
+                                    text="{i18n>overdueMessage}"
+                                    enableFormattedText="true"
+                                    showIcon="true"
+                                    type="Information"/>
+                            </VBox>
+                        </f:content>
+                    </f:Card>
+
+                </grid:CSSGrid>
+            </grid:CSSGrid>
+
+        </content>
     </Page>
 </mvc:View>
