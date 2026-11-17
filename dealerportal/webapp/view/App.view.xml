@@ -127,11 +127,11 @@
                             text="Payment Overview"/>
 
                         <tnt:NavigationListItem
-                            key="payments"
+                            key="RoutePayments"
                             text="Payments"/>
 
-                        <tnt:NavigationListItem
-                            key="invoiceStatus"
+                        <tnt:NavigationListItem 
+                            key="RouteInvoiceStatus" 
                             text="Invoice Status"/>
 
                         <tnt:NavigationListItem

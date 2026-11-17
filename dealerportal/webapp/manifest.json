@@ -41,7 +41,9 @@
         "sap.ui.core": {},
         "sap.tnt": {},
         "sap.f": {},
-        "sap.ui.layout": {}
+        "sap.ui.layout": {},
+        "sap.ui.comp": {},
+        "sap.ui.table": {}
       }
     },
     "contentDensities": {
@@ -92,6 +94,20 @@
           "target": [
             "TargetPaymentOverView"
           ]
+        },
+        {
+          "name": "RoutePayments",
+          "pattern": "payments",
+          "target": [
+            "TargetPayments"
+          ]
+        },
+        {
+          "name": "RouteInvoiceStatus",
+          "pattern": "invoicestatus",
+          "target": [
+            "TargetInvoiceStatus"
+          ]
         }
       ],
       "targets": {
@@ -102,6 +118,14 @@
         "TargetPaymentOverView": {
           "id": "idPymntOVPage",
           "name": "PaymentOverview"
+        },
+        "TargetPayments": {
+          "id": "idPaymentsPage",
+          "name": "Payments"
+        },
+        "TargetInvoiceStatus": {
+          "id": "idInvoiceStatusPage",
+          "name": "InvoiceStatus"
         }
       }
     },

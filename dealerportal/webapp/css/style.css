@@ -118,3 +118,48 @@
   .dpPaymentOverview .dpFilterBar { padding-left: 1rem; padding-right: 1rem; }
   .dpPaymentOverview .dpBody { padding: 0.75rem 1rem 1rem; }
 }
+
+
+/* Payments css */
+
+.dpPayments { background: var(--sapBackgroundColor); }
+
+.dpPayments .dpBody {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1rem 1.5rem 1.5rem;
+}
+
+.dpPayments .dpPageTitle.sapMTB {
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.dpPayments .sapFCard {
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: var(--sapContent_Shadow0);
+}
+
+.dpPayments .dpPaymentTabs .sapMITH { padding: 0 1rem; }
+.dpPayments .dpFilterGrid { padding: 0.5rem 1rem 1rem; }
+
+.dpPayments .dpTableToolbar.sapMTB {
+  height: auto;
+  padding: 0.75rem 1rem;
+  background: transparent;
+}
+.dpPayments .dpPaymentsTable tr.sapMListTblRow { height: 3rem; }
+
+@media (max-width: 1200px) {
+  .dpPayments .dpFilterGrid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
+
+@media (max-width: 600px) {
+  .dpPayments .dpFilterGrid { grid-template-columns: minmax(0, 1fr) !important; }
+  .dpPayments .dpBody { padding: 0.75rem 1rem 1rem; }
+}

@@ -1,0 +1,147 @@
+<mvc:View
+    controllerName="com.itc.dealerportal.controller.InvoiceStatus"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns="sap.m"
+    core:require="{ formatter: 'com/itc/dealerportal/model/formatter', DateType: 'sap/ui/model/type/Date' }">
+
+    <Page id="idInvoiceStatusPage" class="dpPayments" showHeader="false" backgroundDesign="Transparent">
+        <content>
+            <grid:CSSGrid class="dpBody" gridTemplateColumns="minmax(0, 1fr)" gridGap="1rem">
+
+                <Toolbar class="dpPageTitle">
+                    <Title text="{i18n>invoiceStatusTitle}" titleStyle="H3"/>
+                </Toolbar>
+
+                <f:Card class="dpFilterPanel">
+                    <f:content>
+                        <grid:CSSGrid
+                            class="dpFilterGrid"
+                            gridTemplateColumns="repeat(5, minmax(0, 1fr)) auto auto"
+                            gridGap="1rem"
+                            >
+                            <ComboBox
+                                placeholder="{i18n>customer}"
+                                selectedKey="{filter>/customer}"
+                                items="{filter>/customers}">
+                                <core:Item key="{filter>key}" text="{filter>name}"/>
+                            </ComboBox>
+                            <ComboBox
+                                placeholder="{i18n>paymentSettlement}"
+                                selectedKey="{filter>/settlement}"
+                                items="{filter>/settlements}">
+                                <core:Item key="{filter>key}" text="{filter>name}"/>
+                            </ComboBox>
+                            <DatePicker
+                                placeholder="{i18n>submittedDate}"
+                                value="{filter>/submittedDate}"
+                                valueFormat="yyyy-MM-dd"
+                                displayFormat="dd MMM yyyy"/>
+                            <ComboBox
+                                placeholder="{i18n>period}"
+                                selectedKey="{filter>/period}"
+                                items="{filter>/periods}">
+                                <core:Item key="{filter>key}" text="{filter>name}"/>
+                            </ComboBox>
+                            <ComboBox
+                                placeholder="{i18n>status}"
+                                selectedKey="{filter>/status}"
+                                items="{filter>/statuses}">
+                                <core:Item key="{filter>key}" text="{filter>name}"/>
+                            </ComboBox>
+                            <Button text="{i18n>applyFilter}" type="Emphasized" press=".onApplyFilter"/>
+                            <Button text="{i18n>reset}" press=".onResetFilter"/>
+                        </grid:CSSGrid>
+                    </f:content>
+                </f:Card>
+
+                <f:Card class="dpTableCard">
+                    <f:content>
+                        <VBox renderType="Bare">
+
+                            <OverflowToolbar class="dpTableToolbar">
+                                <ToolbarSpacer/>
+                                <SearchField
+                                    width="14rem"
+                                    placeholder="{i18n>search}"
+                                    liveChange=".onSearch">
+                                    <layoutData>
+                                        <OverflowToolbarLayoutData priority="High" shrinkable="true" minWidth="8rem"/>
+                                    </layoutData>
+                                </SearchField>
+                                <Button icon="sap-icon://download" text="{i18n>export}"/>
+                            </OverflowToolbar>
+
+                            <ScrollContainer class="dpScroll" horizontal="true" vertical="false" width="100%">
+                                <Table
+                                    id="idInvoiceTable"
+                                    class="dpPaymentsTable dpWideTable"
+                                    growing="true"
+                                    growingThreshold="12"
+                                    growingTriggerText="{i18n>showMore}"
+                                    items="{invoice>/invoices}">
+
+                                    <columns>
+                                        <Column width="7rem"><Text text="{i18n>colInvoiceNo}"/></Column>
+                                        <Column width="11rem"><Text text="{i18n>colCustomer}"/></Column>
+                                        <Column width="7rem"><Text text="{i18n>colDocNo}"/></Column>
+                                        <Column width="7rem"><Text text="{i18n>colDocTypeName}"/></Column>
+                                        <Column width="8rem"><Text text="{i18n>colPartialSettlement}"/></Column>
+                                        <Column width="5rem"><Text text="{i18n>colDocType}"/></Column>
+                                        <Column width="6rem"><Text text="{i18n>colDocDate}"/></Column>
+                                        <Column width="6rem"><Text text="{i18n>colDueDate}"/></Column>
+                                        <Column width="5rem"><Text text="{i18n>colPymtTerm}"/></Column>
+                                        <Column width="7rem" hAlign="End"><Text text="{i18n>colDocAmount}"/></Column>
+                                        <Column width="8rem" hAlign="End"><Text text="{i18n>colBalanceAmount}"/></Column>
+                                        <Column width="6rem" hAlign="Center"><Text text="{i18n>colOverdueFlag}"/></Column>
+                                        <Column width="11rem"><Text text="{i18n>colReferenceNo}"/></Column>
+                                        <Column width="13rem"><Text text="{i18n>colRemarks}"/></Column>
+                                        <Column width="4rem" hAlign="End"><Text text="{i18n>colTds}"/></Column>
+                                        <Column width="6rem" hAlign="End"><Text text="{i18n>colBaseForTds}"/></Column>
+                                        <Column width="6rem" hAlign="End"><Text text="{i18n>colTdsAmount}"/></Column>
+                                        <Column width="8rem" hAlign="End"><Text text="{i18n>colBalancePayable}"/></Column>
+                                        <Column width="6rem"><Text text="{i18n>colStatus}"/></Column>
+                                    </columns>
+
+                                    <items>
+                                        <ColumnListItem vAlign="Middle">
+                                            <cells>
+                                                <Text text="{invoice>invoiceNo}"/>
+                                                <Text text="{invoice>customer}"/>
+                                                <Text text="{invoice>docNo}"/>
+                                                <Text text="{invoice>docTypeName}"/>
+                                                <Text text="{invoice>partialSettlement}"/>
+                                                <Text text="{invoice>docType}"/>
+                                                <Text text="{path:'invoice>docDate', type:'DateType', formatOptions:{source:{pattern:'yyyy-MM-dd'}, pattern:'M/d/yyyy'}}"/>
+                                                <Text text="{path:'invoice>dueDate', type:'DateType', formatOptions:{source:{pattern:'yyyy-MM-dd'}, pattern:'M/d/yyyy'}}"/>
+                                                <Text text="{invoice>paymentTerm}"/>
+                                                <Text text="{path:'invoice>docAmount', formatter:'formatter.amount'}"/>
+                                                <Text text="{path:'invoice>balanceAmount', formatter:'formatter.amount'}"/>
+                                                <CheckBox editable="false" selected="{invoice>overdueFlag}"/>
+                                                <Text text="{invoice>referenceNo}"/>
+                                                <Text text="{invoice>remarks}" maxLines="2"/>
+                                                <Text text="{invoice>tds}"/>
+                                                <Text text="{path:'invoice>baseForTds', formatter:'formatter.amount'}"/>
+                                                <Text text="{path:'invoice>tdsAmount', formatter:'formatter.amount'}"/>
+                                                <Text text="{path:'invoice>balancePayable', formatter:'formatter.amount'}"/>
+                                                <ObjectStatus
+                                                    inverted="true"
+                                                    text="{invoice>status}"
+                                                    icon="{path:'invoice>status', formatter:'formatter.invoiceStatusIcon'}"
+                                                    state="{path:'invoice>status', formatter:'formatter.statusState'}"/>
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+                                </Table>
+                            </ScrollContainer>
+
+                        </VBox>
+                    </f:content>
+                </f:Card>
+
+            </grid:CSSGrid>
+        </content>
+    </Page>
+</mvc:View>
