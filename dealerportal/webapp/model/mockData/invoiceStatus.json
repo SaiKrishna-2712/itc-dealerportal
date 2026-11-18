@@ -1,4 +1,24 @@
 {
+  "filterOptions": {
+    "customers": [
+      { "key": "42-CH JAVA & COMPANY", "name": "42-CH JAVA & COMPANY" }
+    ],
+    "settlements": [
+      { "key": "Yes", "name": "Partially settled" },
+      { "key": "No", "name": "Not partially settled" }
+    ],
+    "periods": [
+      { "key": "LAST_WEEK", "name": "Last Week" },
+      { "key": "LAST_MONTH", "name": "Last Month" },
+      { "key": "LAST_3_MONTHS", "name": "Last 3 Months" },
+      { "key": "LAST_6_MONTHS", "name": "Last 6 Months" }
+    ],
+    "statuses": [
+      { "key": "Paid", "name": "Paid" },
+      { "key": "Open", "name": "Open" },
+      { "key": "Overdue", "name": "Overdue" }
+    ]
+  },
   "invoices": [
     { "invoiceNo": "0900113433", "customer": "42-CH JAVA & COMPANY", "docNo": "0900113433", "docTypeName": "Invoice", "partialSettlement": "No", "docType": "RV", "docDate": "2024-09-24", "dueDate": "2024-10-24", "paymentTerm": "C030", "docAmount": 566400, "balanceAmount": 566400, "overdueFlag": true, "referenceNo": "E24AC22161000009", "remarks": "Please check the payment has been cleared.", "tds": 1200, "baseForTds": 0, "tdsAmount": 0, "balancePayable": 566400, "status": "Paid" },
     { "invoiceNo": "0900113445", "customer": "42-CH JAVA & COMPANY", "docNo": "0900113445", "docTypeName": "Invoice", "partialSettlement": "No", "docType": "RV", "docDate": "2025-02-19", "dueDate": "2025-03-21", "paymentTerm": "C030", "docAmount": 47369, "balanceAmount": 47369, "overdueFlag": true, "referenceNo": "E36A125101000095", "remarks": "Please check the payment has been cleared.", "tds": 1200, "baseForTds": 0, "tdsAmount": 0, "balancePayable": 47369, "status": "Paid" },

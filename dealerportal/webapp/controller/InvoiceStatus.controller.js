@@ -26,26 +26,10 @@ sap.ui.define([
     _getDefaultFilters() {
       return {
         customer: "",
-        customers: [{ key: "42-CH JAVA & COMPANY", name: "42-CH JAVA & COMPANY" }],
         settlement: "",
-        settlements: [
-          { key: "Yes", name: "Partially settled" },
-          { key: "No", name: "Not partially settled" }
-        ],
         submittedDate: null,
         period: "",
-        periods: [
-          { key: "LAST_WEEK", name: "Last Week" },
-          { key: "LAST_MONTH", name: "Last Month" },
-          { key: "LAST_3_MONTHS", name: "Last 3 Months" },
-          { key: "LAST_6_MONTHS", name: "Last 6 Months" }
-        ],
         status: "",
-        statuses: [
-          { key: "Paid", name: "Paid" },
-          { key: "Open", name: "Open" },
-          { key: "Overdue", name: "Overdue" }
-        ],
         search: ""
       };
     },
@@ -57,7 +41,7 @@ sap.ui.define([
       oView.getModel("invoice")
         .loadData(sap.ui.require.toUrl("com/itc/dealerportal/model/mockData/invoiceStatus.json"))
         .then(() => this._applyFilters())
-        .catch(() => MessageToast.show("Unable to load invoices"))
+        .catch(() => MessageToast.show("Unable to load customer ledger"))
         .finally(() => oView.setBusy(false));
     },
 

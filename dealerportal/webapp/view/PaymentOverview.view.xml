@@ -21,34 +21,7 @@
                     <Text text="{payment>/lastUpdated}"/>
                 </VBox>
                 <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
-                <Button icon="sap-icon://download" text="{i18n>export}" type="Emphasized"/>
             </Toolbar>
-
-            <Toolbar class="dpFilterBar">
-                <Select
-                    width="14rem"
-                    forceSelection="true"
-                    selectedKey="{filter>/distributor}"
-                    items="{filter>/distributors}">
-                    <core:Item key="{filter>key}" text="{filter>name}"/>
-                </Select>
-                <DatePicker
-                    width="11rem"
-                    placeholder="{i18n>fromDate}"
-                    value="{filter>/fromDate}"
-                    valueFormat="yyyy-MM-dd"
-                    displayFormat="dd MMM yyyy"/>
-                <DatePicker
-                    width="11rem"
-                    placeholder="{i18n>toDate}"
-                    value="{filter>/toDate}"
-                    valueFormat="yyyy-MM-dd"
-                    displayFormat="dd MMM yyyy"/>
-                <ToolbarSpacer/>
-                <Button text="{i18n>applyFilter}" type="Emphasized" press=".onApplyFilter"/>
-                <Button text="{i18n>reset}" press=".onResetFilter"/>
-            </Toolbar>
-
         </VBox>
 
             <grid:CSSGrid class="dpBody" gridTemplateColumns="minmax(0, 1fr)" gridGap="1rem">

@@ -1,3 +1,4 @@
+
 <mvc:View
     controllerName="com.itc.dealerportal.controller.Payments"
     xmlns:mvc="sap.ui.core.mvc"
@@ -5,22 +6,43 @@
     xmlns:f="sap.f"
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns="sap.m"
-    core:require="{ formatter: 'com/itc/dealerportal/model/formatter', DateType: 'sap/ui/model/type/Date' }">
+    core:require="{
+        formatter: 'com/itc/dealerportal/model/formatter',
+        DateType: 'sap/ui/model/type/Date'
+    }">
 
-    <Page id="idPaymentsPage" class="dpPayments" showHeader="false" backgroundDesign="Transparent">
+    <Page
+        id="idPaymentsPage"
+        class="dpPayments"
+        showHeader="false"
+        backgroundDesign="Transparent">
+
         <content>
-            <grid:CSSGrid class="dpBody" gridTemplateColumns="minmax(0, 1fr)" gridGap="1rem">
+            <grid:CSSGrid
+                class="dpBody"
+                gridTemplateColumns="minmax(0, 1fr)"
+                gridGap="1rem">
 
+                <!-- Page Title -->
                 <Toolbar class="dpPageTitle">
-                    <Title text="{i18n>paymentsTitle}" titleStyle="H3"/>
+                    <Title
+                        text="{i18n>paymentsTitle}"
+                        titleStyle="H3"/>
+
                     <ToolbarSpacer/>
-                    <Button icon="sap-icon://add" text="{i18n>addPayment}" type="Emphasized"/>
+
+                    <Button
+                        icon="sap-icon://add"
+                        text="{i18n>addPayment}"
+                        type="Emphasized"/>
                 </Toolbar>
 
+                <!-- Filter Section -->
                 <f:Card class="dpFilterPanel">
                     <f:content>
                         <VBox renderType="Bare">
 
+                            <!-- Payment Status Tabs -->
                             <IconTabBar
                                 class="dpPaymentTabs"
                                 expandable="false"
@@ -29,114 +51,264 @@
                                 backgroundDesign="Transparent"
                                 selectedKey="{filter>/tab}"
                                 select=".onTabSelect">
+
                                 <items>
-                                    <IconTabFilter key="all" text="{i18n>tabAll}"/>
-                                    <IconTabFilter key="Pending" text="{i18n>tabPending}"/>
-                                    <IconTabFilter key="Approved" text="{i18n>tabApproved}"/>
-                                    <IconTabFilter key="Rejected" text="{i18n>tabRejected}"/>
+                                    <IconTabFilter
+                                        key="all"
+                                        text="{i18n>tabAll}"/>
+
+                                    <IconTabFilter
+                                        key="Pending"
+                                        text="{i18n>tabPending}"/>
+
+                                    <IconTabFilter
+                                        key="Approved"
+                                        text="{i18n>tabApproved}"/>
+
+                                    <IconTabFilter
+                                        key="Rejected"
+                                        text="{i18n>tabRejected}"/>
                                 </items>
                             </IconTabBar>
 
+                            <!-- Filter Controls -->
                             <grid:CSSGrid
-                                class="dpFilterGrid"
-                                gridTemplateColumns="repeat(5, minmax(0, 1fr)) auto auto"
-                                gridGap="1rem"
-                                >
+                                class="dpPaymentsFilterGrid"
+                                gridTemplateColumns="repeat(5, minmax(0, 1fr)) minmax(12rem, auto)"
+                                gridGap="1rem">
+
+                                <!-- Customer -->
                                 <ComboBox
                                     placeholder="{i18n>customer}"
                                     selectedKey="{filter>/customer}"
                                     items="{filter>/customers}">
-                                    <core:Item key="{filter>key}" text="{filter>name}"/>
+
+                                    <core:Item
+                                        key="{filter>key}"
+                                        text="{filter>name}"/>
                                 </ComboBox>
+
+                                <!-- Payment Type -->
                                 <ComboBox
                                     placeholder="{i18n>paymentType}"
                                     selectedKey="{filter>/paymentType}"
                                     items="{filter>/paymentTypes}">
-                                    <core:Item key="{filter>key}" text="{filter>name}"/>
+
+                                    <core:Item
+                                        key="{filter>key}"
+                                        text="{filter>name}"/>
                                 </ComboBox>
+
+                                <!-- Submitted Date -->
                                 <DatePicker
                                     placeholder="{i18n>submittedDate}"
                                     value="{filter>/submittedDate}"
                                     valueFormat="yyyy-MM-dd"
                                     displayFormat="dd MMM yyyy"/>
+
+                                <!-- Payment Date -->
                                 <DatePicker
                                     placeholder="{i18n>paymentDate}"
                                     value="{filter>/paymentDate}"
                                     valueFormat="yyyy-MM-dd"
                                     displayFormat="dd MMM yyyy"/>
+
+                                <!-- Status -->
                                 <ComboBox
                                     placeholder="{i18n>status}"
                                     selectedKey="{filter>/status}"
                                     items="{filter>/statuses}">
-                                    <core:Item key="{filter>key}" text="{filter>name}"/>
-                                </ComboBox>
-                                <Button text="{i18n>applyFilter}" type="Emphasized" press=".onApplyFilter"/>
-                                <Button text="{i18n>reset}" press=".onResetFilter"/>
-                            </grid:CSSGrid>
 
+                                    <core:Item
+                                        key="{filter>key}"
+                                        text="{filter>name}"/>
+                                </ComboBox>
+
+                                <!-- Filter Action Buttons -->
+                                <HBox
+                                    class="dpPaymentsFilterActions"
+                                    width="100%"
+                                    justifyContent="End"
+                                    alignItems="Center">
+
+                                    <Button
+                                        text="{i18n>applyFilter}"
+                                        type="Emphasized"
+                                        press=".onApplyFilter"/>
+
+                                    <Button
+                                        text="{i18n>reset}"
+                                        press=".onResetFilter"
+                                        class="sapUiTinyMarginBegin"/>
+
+                                </HBox>
+
+                            </grid:CSSGrid>
                         </VBox>
                     </f:content>
                 </f:Card>
 
+                <!-- Payments Table Section -->
                 <f:Card class="dpTableCard">
                     <f:content>
-                        <Table
-                            id="idPaymentsTable"
-                            class="dpPaymentsTable"
-                            mode="MultiSelect"
-                            growing="true"
-                            growingThreshold="12"
-                            growingTriggerText="{i18n>showMore}"
-                            popinLayout="GridSmall"
-                            items="{payments>/payments}">
+                        <VBox
+                            class="dpTableBox"
+                            renderType="Bare"
+                            width="100%">
 
-                            <headerToolbar>
-                                <Toolbar class="dpTableToolbar">
-                                    <Title text="{i18n>submittedPayments}" titleStyle="H5"/>
-                                    <ToolbarSpacer/>
-                                    <SearchField
-                                        width="14rem"
-                                        placeholder="{i18n>search}"
-                                        liveChange=".onSearch"/>
-                                    <Button icon="sap-icon://download" text="{i18n>export}"/>
-                                </Toolbar>
-                            </headerToolbar>
+                            <!-- Table Toolbar -->
+                            <OverflowToolbar class="dpTableToolbar">
 
-                            <columns>
-                                <Column minScreenWidth="Phone" demandPopin="true"><Text text="{i18n>colRefNo}"/></Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colSubmittedOn}"/></Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPaymentType}"/></Column>
-                                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colInstrumentType}"/></Column>
-                                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colInstrumentNo}"/></Column>
-                                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colPaymentDate}"/></Column>
-                                <Column minScreenWidth="Phone" demandPopin="true"><Text text="{i18n>colAmount}"/></Column>
-                                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colDocuments}"/></Column>
-                                <Column minScreenWidth="Phone" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
-                                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colLastUpdated}"/></Column>
-                                <Column minScreenWidth="Phone" hAlign="Center"><Text text="{i18n>colAction}"/></Column>
-                            </columns>
+                                <Title
+                                    text="{i18n>submittedPayments}"
+                                    titleStyle="H5"/>
 
-                            <items>
-                                <ColumnListItem vAlign="Middle">
-                                    <cells>
-                                        <Link text="{payments>id}" emphasized="true"/>
-                                        <Text text="{path:'payments>submittedOn', type:'DateType', formatOptions:{source:{pattern:'yyyy-MM-dd'}, pattern:'dd MMM yyyy'}}"/>
-                                        <Text text="{payments>paymentType}"/>
-                                        <Text text="{payments>instrumentType}"/>
-                                        <Text text="{payments>instrumentNo}"/>
-                                        <Text text="{path:'payments>paymentDate', type:'DateType', formatOptions:{source:{pattern:'yyyy-MM-dd'}, pattern:'dd MMM yyyy'}}"/>
-                                        <Text text="{path:'payments>amount', formatter:'formatter.amountIN'}"/>
-                                        <ObjectStatus icon="sap-icon://attachment" text="{payments>docCount}"/>
-                                        <ObjectStatus
-                                            inverted="true"
-                                            text="{payments>status}"
-                                            state="{path:'payments>status', formatter:'formatter.statusState'}"/>
-                                        <Text text="{path:'payments>lastUpdated', type:'DateType', formatOptions:{source:{pattern:'yyyy-MM-dd'}, pattern:'d/M/yyyy'}}"/>
-                                        <Button icon="sap-icon://overflow" type="Transparent"/>
-                                    </cells>
-                                </ColumnListItem>
-                            </items>
-                        </Table>
+                                <ToolbarSpacer/>
+
+                                <SearchField
+                                    width="14rem"
+                                    placeholder="{i18n>search}"
+                                    liveChange=".onSearch">
+
+                                    <layoutData>
+                                        <OverflowToolbarLayoutData
+                                            priority="High"
+                                            shrinkable="true"
+                                            minWidth="8rem"/>
+                                    </layoutData>
+                                </SearchField>
+
+                                <Button
+                                    icon="sap-icon://download"
+                                    text="{i18n>export}"/>
+
+                            </OverflowToolbar>
+
+                            <!-- Horizontal Scrolling Table -->
+                            <ScrollContainer
+                                class="dpScroll"
+                                horizontal="true"
+                                vertical="false"
+                                width="100%">
+
+                                <Table
+                                    id="idPaymentsTable"
+                                    class="dpPaymentsTable dpWideTable"
+                                    width="110rem"
+                                    fixedLayout="true"
+                                    mode="MultiSelect"
+                                    growing="true"
+                                    growingThreshold="12"
+                                    growingTriggerText="{i18n>showMore}"
+                                    items="{payments>/payments}">
+
+                                    <!-- Table Columns -->
+                                    <columns>
+
+                                        <Column width="9rem">
+                                            <Text text="{i18n>colRefNo}"/>
+                                        </Column>
+
+                                        <Column width="10rem">
+                                            <Text text="{i18n>colSubmittedOn}"/>
+                                        </Column>
+
+                                        <Column width="11rem">
+                                            <Text text="{i18n>colPaymentType}"/>
+                                        </Column>
+
+                                        <Column width="10rem">
+                                            <Text text="{i18n>colInstrumentType}"/>
+                                        </Column>
+
+                                        <Column width="10rem">
+                                            <Text text="{i18n>colInstrumentNo}"/>
+                                        </Column>
+
+                                        <Column width="10rem">
+                                            <Text text="{i18n>colPaymentDate}"/>
+                                        </Column>
+
+                                        <Column
+                                            width="9rem"
+                                            hAlign="End">
+                                            <Text text="{i18n>colAmount}"/>
+                                        </Column>
+
+                                        <Column
+                                            width="8rem"
+                                            hAlign="Center">
+                                            <Text text="{i18n>colDocuments}"/>
+                                        </Column>
+
+                                        <Column width="8rem">
+                                            <Text text="{i18n>colStatus}"/>
+                                        </Column>
+
+                                        <Column width="10rem">
+                                            <Text text="{i18n>colLastUpdated}"/>
+                                        </Column>
+
+                                        <Column
+                                            width="6rem"
+                                            hAlign="Center">
+                                            <Text text="{i18n>colAction}"/>
+                                        </Column>
+
+                                    </columns>
+
+                                    <!-- Table Rows -->
+                                    <items>
+                                        <ColumnListItem vAlign="Middle">
+
+                                            <cells>
+
+                                                <Link
+                                                    text="{payments>id}"
+                                                    emphasized="true"/>
+
+                                                <Text
+                                                    text="{path:'payments>submittedOn', type:'DateType', formatOptions:{source:{pattern:'yyyy-MM-dd'}, pattern:'dd MMM yyyy'}}"/>
+
+                                                <Text
+                                                    text="{payments>paymentType}"/>
+
+                                                <Text
+                                                    text="{payments>instrumentType}"/>
+
+                                                <Text
+                                                    text="{payments>instrumentNo}"/>
+
+                                                <Text
+                                                    text="{path:'payments>paymentDate', type:'DateType', formatOptions:{source:{pattern:'yyyy-MM-dd'}, pattern:'dd MMM yyyy'}}"/>
+
+                                                <Text
+                                                    text="{path:'payments>amount', formatter:'formatter.amountIN'}"/>
+
+                                                <ObjectStatus
+                                                    icon="sap-icon://attachment"
+                                                    text="{payments>docCount}"/>
+
+                                                <ObjectStatus
+                                                    inverted="true"
+                                                    text="{payments>status}"
+                                                    state="{path:'payments>status', formatter:'formatter.statusState'}"/>
+
+                                                <Text
+                                                    text="{path:'payments>lastUpdated', type:'DateType', formatOptions:{source:{pattern:'yyyy-MM-dd'}, pattern:'d/M/yyyy'}}"/>
+
+                                                <Button
+                                                    icon="sap-icon://overflow"
+                                                    type="Transparent"/>
+
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+
+                                </Table>
+                            </ScrollContainer>
+
+                        </VBox>
                     </f:content>
                 </f:Card>
 

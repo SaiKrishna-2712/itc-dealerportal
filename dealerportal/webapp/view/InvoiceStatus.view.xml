@@ -12,7 +12,7 @@
             <grid:CSSGrid class="dpBody" gridTemplateColumns="minmax(0, 1fr)" gridGap="1rem">
 
                 <Toolbar class="dpPageTitle">
-                    <Title text="{i18n>invoiceStatusTitle}" titleStyle="H3"/>
+                    <Title text="{i18n>customerLedgerTitle}" titleStyle="H3"/>
                 </Toolbar>
 
                 <f:Card class="dpFilterPanel">
@@ -21,18 +21,18 @@
                             class="dpFilterGrid"
                             gridTemplateColumns="repeat(5, minmax(0, 1fr)) auto auto"
                             gridGap="1rem"
-                            >
+                        >
                             <ComboBox
                                 placeholder="{i18n>customer}"
                                 selectedKey="{filter>/customer}"
-                                items="{filter>/customers}">
-                                <core:Item key="{filter>key}" text="{filter>name}"/>
+                                items="{invoice>/filterOptions/customers}">
+                                <core:Item key="{invoice>key}" text="{invoice>name}"/>
                             </ComboBox>
                             <ComboBox
                                 placeholder="{i18n>paymentSettlement}"
                                 selectedKey="{filter>/settlement}"
-                                items="{filter>/settlements}">
-                                <core:Item key="{filter>key}" text="{filter>name}"/>
+                                items="{invoice>/filterOptions/settlements}">
+                                <core:Item key="{invoice>key}" text="{invoice>name}"/>
                             </ComboBox>
                             <DatePicker
                                 placeholder="{i18n>submittedDate}"
@@ -42,14 +42,14 @@
                             <ComboBox
                                 placeholder="{i18n>period}"
                                 selectedKey="{filter>/period}"
-                                items="{filter>/periods}">
-                                <core:Item key="{filter>key}" text="{filter>name}"/>
+                                items="{invoice>/filterOptions/periods}">
+                                <core:Item key="{invoice>key}" text="{invoice>name}"/>
                             </ComboBox>
                             <ComboBox
                                 placeholder="{i18n>status}"
                                 selectedKey="{filter>/status}"
-                                items="{filter>/statuses}">
-                                <core:Item key="{filter>key}" text="{filter>name}"/>
+                                items="{invoice>/filterOptions/statuses}">
+                                <core:Item key="{invoice>key}" text="{invoice>name}"/>
                             </ComboBox>
                             <Button text="{i18n>applyFilter}" type="Emphasized" press=".onApplyFilter"/>
                             <Button text="{i18n>reset}" press=".onResetFilter"/>
@@ -59,13 +59,14 @@
 
                 <f:Card class="dpTableCard">
                     <f:content>
-                        <VBox renderType="Bare">
+                        <VBox class="dpTableBox" renderType="Bare" width="100%">
 
                             <OverflowToolbar class="dpTableToolbar">
                                 <ToolbarSpacer/>
                                 <SearchField
                                     width="14rem"
                                     placeholder="{i18n>search}"
+                                    value="{filter>/search}"
                                     liveChange=".onSearch">
                                     <layoutData>
                                         <OverflowToolbarLayoutData priority="High" shrinkable="true" minWidth="8rem"/>
@@ -74,10 +75,11 @@
                                 <Button icon="sap-icon://download" text="{i18n>export}"/>
                             </OverflowToolbar>
 
-                            <ScrollContainer class="dpScroll" horizontal="true" vertical="false" width="100%">
+                            <ScrollContainer class="dpScroll" horizontal="true" vertical="false" width="100%" height="auto">
                                 <Table
                                     id="idInvoiceTable"
                                     class="dpPaymentsTable dpWideTable"
+                                    width="137rem"
                                     growing="true"
                                     growingThreshold="12"
                                     growingTriggerText="{i18n>showMore}"
@@ -108,7 +110,7 @@
                                     <items>
                                         <ColumnListItem vAlign="Middle">
                                             <cells>
-                                                <Text text="{invoice>invoiceNo}"/>
+                                                <Link text="{invoice>invoiceNo}" emphasized="true"/>
                                                 <Text text="{invoice>customer}"/>
                                                 <Text text="{invoice>docNo}"/>
                                                 <Text text="{invoice>docTypeName}"/>
@@ -119,7 +121,7 @@
                                                 <Text text="{invoice>paymentTerm}"/>
                                                 <Text text="{path:'invoice>docAmount', formatter:'formatter.amount'}"/>
                                                 <Text text="{path:'invoice>balanceAmount', formatter:'formatter.amount'}"/>
-                                                <CheckBox editable="false" selected="{invoice>overdueFlag}"/>
+                                                <CheckBox editable="true" selected="{invoice>overdueFlag}"/>
                                                 <Text text="{invoice>referenceNo}"/>
                                                 <Text text="{invoice>remarks}" maxLines="2"/>
                                                 <Text text="{invoice>tds}"/>

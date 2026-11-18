@@ -130,9 +130,9 @@
                             key="RoutePayments"
                             text="Payments"/>
 
-                        <tnt:NavigationListItem 
-                            key="RouteInvoiceStatus" 
-                            text="Invoice Status"/>
+                        <tnt:NavigationListItem
+                            key="RouteInvoiceStatus"
+                            text="Customer Ledger"/>
 
                         <tnt:NavigationListItem
                             key="claims"
