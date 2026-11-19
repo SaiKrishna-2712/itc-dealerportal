@@ -59,6 +59,10 @@
       },
       "mAppViewModel": {
         "type": "sap.ui.model.json.JSONModel"
+      },
+      "claims": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/claims.json"
       }
     },
     "resources": {
@@ -108,6 +112,20 @@
           "target": [
             "TargetInvoiceStatus"
           ]
+        },
+        {
+          "name": "RouteClaims",
+          "pattern": "claims",
+          "target": [
+            "TargetClaims"
+          ]
+        },
+        {
+          "name": "RouteClaimsOverview",
+          "pattern": "claimsoverview",
+          "target": [
+            "TargetClaimsOverview"
+          ]
         }
       ],
       "targets": {
@@ -126,6 +144,14 @@
         "TargetInvoiceStatus": {
           "id": "idInvoiceStatusPage",
           "name": "InvoiceStatus"
+        },
+        "TargetClaims": {
+          "id": "idClaimsPage",
+          "name": "Claims"
+        },
+        "TargetClaimsOverview": {
+          "id": "idClaimsOverviewPage",
+          "name": "ClaimsOverview"
         }
       }
     },

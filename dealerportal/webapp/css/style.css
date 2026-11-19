@@ -155,3 +155,44 @@
 }
 .dpPayments .dpPaymentsTable tr.sapMListTblRow { height: 3rem; }
 
+
+.dpClaimsOverview .dpLastUpdated .sapMText {
+  font-size: 0.6875rem;
+  color: var(--sapContent_LabelColor);
+  text-align: right;
+}
+.dpClaimsOverview .dpLastUpdated .sapMText:last-child {
+  font-weight: 700;
+  color: var(--sapTextColor);
+}
+
+.dpClaimsOverview .dpPageTitle .sapMBtn:not(.sapMBtnEmphasized) .sapMBtnInner {
+  border: 1px solid var(--sapButton_BorderColor);
+}
+
+.dpClaimsOverview .dpTintInfo     { --dpTint: var(--sapInformativeColor); }
+.dpClaimsOverview .dpTintPositive { --dpTint: var(--sapPositiveColor); }
+.dpClaimsOverview .dpTintNegative { --dpTint: var(--sapNegativeColor); border: 1px solid var(--sapNegativeColor); }
+.dpClaimsOverview .dpTintCritical { --dpTint: var(--sapCriticalColor); }
+
+.dpClaimsOverview .dpKpi,
+.dpClaimsOverview .dpKpi .sapFCardHeader {
+  --sapTile_Background: color-mix(in srgb, var(--dpTint) 12%, var(--sapBaseColor));
+  background: var(--sapTile_Background);
+}
+
+.dpClaimsOverview .dpKpi .sapMNCValueScr,
+.dpClaimsOverview .dpKpi .sapMNCValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.dpClaimsOverview .dpPaymentsTable tr.sapMListTblRow { height: 3rem; }
+
+@media (max-width: 1200px) {
+  .dpClaimsOverview .dpClaimsKpiGrid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+
+@media (max-width: 600px) {
+  .dpClaimsOverview .dpClaimsKpiGrid { grid-template-columns: minmax(0, 1fr) !important; }
+}

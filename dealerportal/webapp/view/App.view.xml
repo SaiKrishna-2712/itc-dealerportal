@@ -135,11 +135,11 @@
                             text="Customer Ledger"/>
 
                         <tnt:NavigationListItem
-                            key="claims"
+                            key="RouteClaims"
                             text="Claims"/>
 
                         <tnt:NavigationListItem
-                            key="claimsOverview"
+                            key="RouteClaimsOverview"
                             text="Claims Overview"/>
 
                     </tnt:NavigationListItem>

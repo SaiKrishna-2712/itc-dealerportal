@@ -1,0 +1,25 @@
+{
+  "lastUpdated": "20 Oct 2026, 10:45 AM",
+  "filterOptions": {
+    "customers": [
+      { "key": "CH_JAVA", "name": "CH.Java & Company" }
+    ]
+  },
+  "kpi": {
+    "totalClaimValue": 37730,
+    "approved": 10500,
+    "approvedPct": 27.8,
+    "rejected": 15300,
+    "rejectedPct": 40.6,
+    "inProgress": 11730,
+    "inProgressPct": 31.1
+  },
+  "rows": [
+    { "description": "In-Process with Marketing Team", "customerValue": 6900, "flag": "MT", "group": "InProgress" },
+    { "description": "In-process with Deputy Regiona", "customerValue": 4830, "flag": "DR", "group": "InProgress" },
+    { "description": "Rejected", "customerValue": 15300, "flag": "R", "group": "Rejected" },
+    { "description": "Pending for re-submission", "customerValue": 200, "flag": "PS", "group": "Pending" },
+    { "description": "Approved", "customerValue": 10500, "flag": "A", "group": "Approved" },
+    { "description": "Summary", "customerValue": 6900, "flag": "AL", "group": "Summary" }
+  ]
+}

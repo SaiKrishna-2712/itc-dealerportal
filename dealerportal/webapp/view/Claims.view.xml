@@ -1,0 +1,102 @@
+<mvc:View
+    controllerName="com.itc.dealerportal.controller.Claims"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns="sap.m"
+    core:require="{ formatter: 'com/itc/dealerportal/model/formatter', DateType: 'sap/ui/model/type/Date' }">
+
+    <Page id="idClaimsPage" class="dpPayments" showHeader="false" backgroundDesign="Transparent">
+        <content>
+            <grid:CSSGrid class="dpBody" gridTemplateColumns="minmax(0, 1fr)" gridGap="1rem">
+
+                <Toolbar class="dpPageTitle">
+                    <Title text="{i18n>claimsTitle}" titleStyle="H3"/>
+                    <ToolbarSpacer/>
+                    <Button icon="sap-icon://add" text="{i18n>newClaim}" type="Emphasized"/>
+                </Toolbar>
+
+                <f:Card class="dpFilterPanel">
+                    <f:content>
+                        <IconTabBar
+                            class="dpPaymentTabs"
+                            expandable="false"
+                            applyContentPadding="false"
+                            headerBackgroundDesign="Transparent"
+                            backgroundDesign="Transparent"
+                            selectedKey="{filter>/tab}"
+                            select=".onTabSelect">
+                            <items>
+                                <IconTabFilter key="Draft" text="{i18n>tabDraft}"/>
+                            </items>
+                        </IconTabBar>
+                    </f:content>
+                </f:Card>
+
+                <f:Card class="dpTableCard">
+                    <f:content>
+                        <Table
+                            id="idClaimsTable"
+                            class="dpPaymentsTable"
+                            mode="MultiSelect"
+                            contextualWidth="Auto"
+                            popinLayout="GridSmall"
+                            items="{claims>/claims}">
+
+                            <headerToolbar>
+                                <OverflowToolbar class="dpTableToolbar">
+                                    <ToolbarSpacer/>
+                                    <SearchField
+                                        width="14rem"
+                                        placeholder="{i18n>search}"
+                                        liveChange=".onSearch">
+                                        <layoutData>
+                                            <OverflowToolbarLayoutData priority="High" shrinkable="true" minWidth="8rem"/>
+                                        </layoutData>
+                                    </SearchField>
+                                </OverflowToolbar>
+                            </headerToolbar>
+
+                            <columns>
+                                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colClaimYear}"/></Column>
+                                <Column minScreenWidth="Phone" demandPopin="true"><Text text="{i18n>colClaimType}"/></Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colSubClaimType}"/></Column>
+                                <Column minScreenWidth="Phone" demandPopin="true"><Text text="{i18n>colInvoiceNumber}"/></Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDocDate}"/></Column>
+                                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colBusinessArea}"/></Column>
+                                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colConsignee}"/></Column>
+                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="End"><Text text="{i18n>colClaimValue}"/></Column>
+                                <Column minScreenWidth="Phone" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
+                                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colLastUpdated}"/></Column>
+                                <Column minScreenWidth="Phone" hAlign="Center"><Text text="{i18n>colAction}"/></Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem vAlign="Middle">
+                                    <cells>
+                                        <Text text="{claims>claimYear}"/>
+                                        <Text text="{claims>claimType}"/>
+                                        <Text text="{claims>subClaimType}"/>
+                                        <Text text="{claims>invoiceNo}"/>
+                                        <Text text="{path:'claims>docDate', type:'DateType', formatOptions:{source:{pattern:'yyyy-MM-dd'}, pattern:'dd MMM yyyy'}}"/>
+                                        <Text text="{claims>businessArea}"/>
+                                        <Text text="{claims>consignee}"/>
+                                        <Text text="{path:'claims>claimValue', formatter:'formatter.amountIN'}"/>
+                                        <ObjectStatus
+                                            inverted="true"
+                                            text="{claims>status}"
+                                            state="{path:'claims>status', formatter:'formatter.statusState'}"/>
+                                        <Text text="{path:'claims>lastUpdated', type:'DateType', formatOptions:{source:{pattern:'yyyy-MM-dd'}, pattern:'d/M/yyyy'}}"/>
+                                        <Button icon="sap-icon://overflow" type="Transparent"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </f:content>
+                </f:Card>
+
+            </grid:CSSGrid>
+        </content>
+    </Page>
+</mvc:View>

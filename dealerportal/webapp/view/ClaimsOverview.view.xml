@@ -1,0 +1,149 @@
+<mvc:View
+    controllerName="com.itc.dealerportal.controller.ClaimsOverview"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns="sap.m"
+    core:require="{ formatter: 'com/itc/dealerportal/model/formatter' }">
+
+    <Page id="idClaimsOverviewPage" class="dpPayments dpClaimsOverview" showHeader="false" backgroundDesign="Transparent">
+        <content>
+            <grid:CSSGrid class="dpBody" gridTemplateColumns="minmax(0, 1fr)" gridGap="1rem">
+
+                <Toolbar class="dpPageTitle">
+                    <Title text="{i18n>claimsOverviewTitle}" titleStyle="H3"/>
+                    <ToolbarSpacer/>
+                    <VBox alignItems="End" class="dpLastUpdated">
+                        <Text text="{i18n>lastUpdated}"/>
+                        <Text text="{claims>/lastUpdated}"/>
+                    </VBox>
+                    <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+                </Toolbar>
+
+                <f:Card class="dpFilterPanel">
+                    <f:content>
+                        <VBox renderType="Bare">
+
+                            <IconTabBar
+                                class="dpPaymentTabs"
+                                expandable="false"
+                                applyContentPadding="false"
+                                headerBackgroundDesign="Transparent"
+                                backgroundDesign="Transparent"
+                                selectedKey="{filter>/tab}"
+                                select=".onTabSelect">
+                                <items>
+                                    <IconTabFilter key="overview" text="{i18n>tabOverview}"/>
+                                    <IconTabFilter key="InProgress" text="{i18n>tabInProgress}"/>
+                                    <IconTabFilter key="Pending" text="{i18n>tabPending}"/>
+                                    <IconTabFilter key="Approved" text="{i18n>tabApproved}"/>
+                                    <IconTabFilter key="Rejected" text="{i18n>tabRejected}"/>
+                                </items>
+                            </IconTabBar>
+
+                            <grid:CSSGrid
+                                class="dpFilterGrid"
+                                gridTemplateColumns="minmax(0, 14rem) minmax(0, 18rem) minmax(0, 18rem) auto auto"
+                                gridGap="1rem"
+                            >
+                                <Select
+                                    forceSelection="true"
+                                    selectedKey="{filter>/customer}"
+                                    items="{claims>/filterOptions/customers}">
+                                    <core:Item key="{claims>key}" text="{claims>name}"/>
+                                </Select>
+                                <DateRangeSelection
+                                    placeholder="{i18n>claimDatePlaceholder}"
+                                    displayFormat="dd/MMM/yyyy"
+                                    dateValue="{filter>/claimFrom}"
+                                    secondDateValue="{filter>/claimTo}"/>
+                                <DateRangeSelection
+                                    placeholder="{i18n>dnDatePlaceholder}"
+                                    displayFormat="dd/MMM/yyyy"
+                                    dateValue="{filter>/dnFrom}"
+                                    secondDateValue="{filter>/dnTo}"/>
+                                <Button text="{i18n>applyFilter}" type="Emphasized" press=".onApplyFilter"/>
+                                <Button text="{i18n>reset}" press=".onResetFilter"/>
+                            </grid:CSSGrid>
+
+                        </VBox>
+                    </f:content>
+                </f:Card>
+
+                <grid:CSSGrid class="dpClaimsKpiGrid" gridTemplateColumns="repeat(4, minmax(0, 15rem))" gridGap="1rem">
+                    <f:Card class="dpKpi dpTintInfo">
+                        <f:header>
+                            <card:NumericHeader
+                                title="{i18n>claimKpiTotal}"
+                                number="{path:'claims>/kpi/totalClaimValue', formatter:'formatter.rupee'}"
+                                numberSize="S"/>
+                        </f:header>
+                    </f:Card>
+                    <f:Card class="dpKpi dpTintPositive">
+                        <f:header>
+                            <card:NumericHeader
+                                title="{i18n>claimKpiApproved}"
+                                number="{path:'claims>/kpi/approved', formatter:'formatter.rupee'}"
+                                numberSize="S"
+                                details="{= ${claims>/kpi/approvedPct} + ${i18n>pctOfTotal}}"/>
+                        </f:header>
+                    </f:Card>
+                    <f:Card class="dpKpi dpTintNegative">
+                        <f:header>
+                            <card:NumericHeader
+                                title="{i18n>claimKpiRejected}"
+                                number="{path:'claims>/kpi/rejected', formatter:'formatter.rupee'}"
+                                numberSize="S"
+                                state="Error"
+                                details="{= ${claims>/kpi/rejectedPct} + ${i18n>pctOfTotal}}"
+                            />
+                        </f:header>
+                    </f:Card>
+                    <f:Card class="dpKpi dpTintCritical">
+                        <f:header>
+                            <card:NumericHeader
+                                title="{i18n>claimKpiInProgress}"
+                                number="{path:'claims>/kpi/inProgress', formatter:'formatter.rupee'}"
+                                numberSize="S"
+                                details="{= ${claims>/kpi/inProgressPct} + ${i18n>pctOfTotal}}"/>
+                        </f:header>
+                    </f:Card>
+                </grid:CSSGrid>
+
+                <f:Card class="dpTableCard">
+                    <f:content>
+                        <Table
+                            id="idClaimsOverviewTable"
+                            class="dpPaymentsTable"
+                            items="{claims>/rows}">
+
+                            <columns>
+                                <Column width="50%">
+                                    <HBox alignItems="Center">
+                                        <Text text="{i18n>colClaimDescription}"/>
+                                        <Button icon="sap-icon://sort" type="Transparent" press=".onSort"/>
+                                    </HBox>
+                                </Column>
+                                <Column><Text text="{i18n>colCustomer}"/></Column>
+                                <Column><Text text="{i18n>colFlag}"/></Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem vAlign="Middle">
+                                    <cells>
+                                        <Link text="{claims>description}"/>
+                                        <ObjectNumber number="{path:'claims>customerValue', formatter:'formatter.amount'}"/>
+                                        <Link text="{claims>flag}" emphasized="true"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </f:content>
+                </f:Card>
+
+            </grid:CSSGrid>
+        </content>
+    </Page>
+</mvc:View>

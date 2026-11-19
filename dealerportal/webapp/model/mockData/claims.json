@@ -1,0 +1,10 @@
+{
+    "claims": [
+        { "claimYear": "2024", "claimType": "Quality", "subClaimType": "Quality with GST", "invoiceNumber": "80174127", "docDate": "2026-10-27", "businessArea": "Bhadrachalam", "consignee": "ITC Limited-PSPD-BC", "claimValue": 7613769, "status": "Draft", "statusState": "None", "lastUpdated": "2025-12-08" },
+        { "claimYear": "2024", "claimType": "Quality", "subClaimType": "Quality with GST", "invoiceNumber": "80174128", "docDate": "2026-10-27", "businessArea": "Bhadrachalam", "consignee": "ITC Limited-PSPD-BC", "claimValue": 7613769, "status": "Draft", "statusState": "None", "lastUpdated": "2025-12-08" },
+        { "claimYear": "2024", "claimType": "Quality", "subClaimType": "Quality with GST", "invoiceNumber": "80174129", "docDate": "2026-10-27", "businessArea": "Bhadrachalam", "consignee": "ITC Limited-PSPD-BC", "claimValue": 7613769, "status": "Draft", "statusState": "None", "lastUpdated": "2025-12-08" },
+        { "claimYear": "2025", "claimType": "Damage", "subClaimType": "Transit Damage", "invoiceNumber": "80174201", "docDate": "2026-09-14", "businessArea": "Kovai", "consignee": "ITC Limited-Foods-KV", "claimValue": 154200, "status": "Draft", "statusState": "None", "lastUpdated": "2025-11-21" },
+        { "claimYear": "2025", "claimType": "Shortage", "subClaimType": "Quantity Shortage", "invoiceNumber": "80174355", "docDate": "2026-08-02", "businessArea": "Munger", "consignee": "ITC Limited-PSPD-MG", "claimValue": 98450, "status": "Draft", "statusState": "None", "lastUpdated": "2025-10-30" },
+        { "claimYear": "2024", "claimType": "Quality", "subClaimType": "Quality without GST", "invoiceNumber": "80174402", "docDate": "2026-07-19", "businessArea": "Saharanpur", "consignee": "ITC Limited-PSPD-SH", "claimValue": 2310075, "status": "Draft", "statusState": "None", "lastUpdated": "2025-09-12" }
+    ]
+}
