@@ -68,7 +68,18 @@
 .dpPaymentOverview .dpKpiOrange .sapFCardHeader { --sapTile_Background: #fff3e2; background: #fff3e2; }
 .dpPaymentOverview .dpKpiGreen,
 .dpPaymentOverview .dpKpiGreen .sapFCardHeader { --sapTile_Background: #e6f5ea; background: #e6f5ea; }
-.dpPaymentOverview .dpKpiRed { border: 1px solid #c9252d; }
+.dpPaymentOverview .dpKpiBlue,
+.dpPaymentOverview .dpKpiRed,
+.dpPaymentOverview .dpKpiOrange,
+.dpPaymentOverview .dpKpiGreen {
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.dpPaymentOverview .dpKpiBlue:hover   { border-color: var(--sapInformativeColor); }
+.dpPaymentOverview .dpKpiRed:hover    { border-color: var(--sapNegativeColor); }
+.dpPaymentOverview .dpKpiOrange:hover { border-color: var(--sapCriticalColor); }
+.dpPaymentOverview .dpKpiGreen:hover  { border-color: var(--sapPositiveColor); }
 
 .dpPaymentOverview .dpKpiGrid .sapMNCValueScr,
 .dpPaymentOverview .dpKpiGrid .sapMNCValue {

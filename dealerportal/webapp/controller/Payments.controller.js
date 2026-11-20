@@ -1,3 +1,4 @@
+
 sap.ui.define([
   "com/itc/dealerportal/controller/BaseController",
   "sap/ui/model/json/JSONModel",
@@ -6,6 +7,8 @@ sap.ui.define([
   "sap/m/MessageToast"
 ], (BaseController, JSONModel, Filter, FilterOperator, MessageToast) => {
   "use strict";
+
+  const PAYMENTS_ENDPOINT = "/getPayments";
 
   return BaseController.extend("com.itc.dealerportal.controller.Payments", {
 
@@ -28,7 +31,7 @@ sap.ui.define([
         customer: "",
         customers: [{ key: "CH_JAVA", name: "CH.Java & Company" }],
         paymentType: "",
-        paymentTypes: [{ key: "Settlement with Payment", name: "Settlement with Payment" }],
+        paymentTypes: [],
         submittedDate: null,
         paymentDate: null,
         status: "",
@@ -41,15 +44,70 @@ sap.ui.define([
       };
     },
 
-    _loadData() {
+    _getUrl() {
+      const sBaseUrl = this.getOwnerComponent()
+        .getManifestEntry("/sap.app/dataSources/dealerApi/uri");
+
+      return sBaseUrl + PAYMENTS_ENDPOINT;
+    },
+
+    _mapPayment(oRow) {
+      return {
+        id: oRow.refNo,
+        submittedOn: oRow.submittedOn,
+        paymentType: oRow.paymentType,
+        instrumentType: oRow.instrumentType,
+        instrumentNo: oRow.instrumentUtrNo,
+        paymentDate: oRow.paymentDate,
+        amount: Number(oRow.amount),
+        docCount: oRow.documentCount,
+        status: oRow.status,
+        lastUpdated: (oRow.lastUpdated || "").slice(0, 10)
+      };
+    },
+
+    async _loadData() {
       const oView = this.getView();
 
       oView.setBusy(true);
-      oView.getModel("payments")
-        .loadData(sap.ui.require.toUrl("com/itc/dealerportal/model/mockData/payments.json"))
-        .then(() => this._applyFilters())
-        .catch(() => MessageToast.show("Unable to load payments"))
-        .finally(() => oView.setBusy(false));
+
+      try {
+        const oResponse = await fetch(this._getUrl(), {
+          method: "GET",
+          headers: {
+            Accept: "application/json"
+          }
+        });
+
+        if (!oResponse.ok) {
+          throw new Error("API Error: " + oResponse.status);
+        }
+
+        const oResult = await oResponse.json();
+
+        const aRows = (oResult.value || []).map(this._mapPayment);
+        const aTypes = [
+          ...new Set(aRows.map((oRow) => oRow.paymentType))
+        ];
+
+        oView.getModel("payments").setProperty("/payments", aRows);
+
+        oView.getModel("filter").setProperty(
+          "/paymentTypes",
+          aTypes.map((sType) => ({
+            key: sType,
+            name: sType
+          }))
+        );
+
+        this._applyFilters();
+
+      } catch (oError) {
+        console.error("Payment API error:", oError);
+        MessageToast.show("Unable to load payments");
+      } finally {
+        oView.setBusy(false);
+      }
     },
 
     _applyFilters() {
@@ -57,26 +115,36 @@ sap.ui.define([
       const aFilters = [];
 
       if (oData.tab !== "all") {
-        aFilters.push(new Filter("status", FilterOperator.EQ, oData.tab));
+        aFilters.push(
+          new Filter("status", FilterOperator.EQ, oData.tab)
+        );
       }
 
       [
-        ["customer", oData.customer],
         ["paymentType", oData.paymentType],
         ["submittedOn", oData.submittedDate],
         ["paymentDate", oData.paymentDate],
         ["status", oData.status]
       ].forEach(([sPath, sValue]) => {
         if (sValue) {
-          aFilters.push(new Filter(sPath, FilterOperator.EQ, sValue));
+          aFilters.push(
+            new Filter(sPath, FilterOperator.EQ, sValue)
+          );
         }
       });
 
       if (oData.search) {
-        aFilters.push(new Filter("id", FilterOperator.Contains, oData.search));
+        aFilters.push(
+          new Filter("id", FilterOperator.Contains, oData.search)
+        );
       }
 
-      this.byId("idPaymentsTable").getBinding("items").filter(aFilters);
+      const oTable = this.byId("idPaymentsTable");
+      const oBinding = oTable.getBinding("items");
+
+      if (oBinding) {
+        oBinding.filter(aFilters);
+      }
     },
 
     onTabSelect(oEvent) {
@@ -84,11 +152,15 @@ sap.ui.define([
 
       oModel.setProperty("/tab", oEvent.getParameter("key"));
       oModel.setProperty("/status", "");
+
       this._applyFilters();
     },
 
     onSearch(oEvent) {
-      this.getView().getModel("filter").setProperty("/search", oEvent.getParameter("newValue"));
+      this.getView()
+        .getModel("filter")
+        .setProperty("/search", oEvent.getParameter("newValue"));
+
       this._applyFilters();
     },
 
@@ -97,7 +169,21 @@ sap.ui.define([
     },
 
     onResetFilter() {
-      this.getView().getModel("filter").setData(this._getDefaultFilters());
+      const oModel = this.getView().getModel("filter");
+      const oDefaults = this._getDefaultFilters();
+
+      [
+        "tab",
+        "customer",
+        "paymentType",
+        "submittedDate",
+        "paymentDate",
+        "status",
+        "search"
+      ].forEach((sKey) => {
+        oModel.setProperty("/" + sKey, oDefaults[sKey]);
+      });
+
       this._applyFilters();
     }
   });

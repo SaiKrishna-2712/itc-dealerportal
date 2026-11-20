@@ -1,11 +1,14 @@
+
 specVersion: '4.0'
 metadata:
   name: com.itc.dealerportal
 type: application
+
 server:
   customMiddleware:
     - name: ui5-tooling-modules-middleware
       afterMiddleware: compression
+
     - name: fiori-tools-proxy
       afterMiddleware: compression
       configuration:
@@ -15,17 +18,26 @@ server:
             - /resources
             - /test-resources
           url: https://ui5.sap.com
+
+        backend:
+          - path: /finance
+            url: https://incture-cherrywork-dev-cw-itc-dev-itc-dealer-portal.cfapps.eu10-004.hana.ondemand.com
+            headers:
+              Authorization: "Bearer eyJqa3UiOiJodHRwczovL2luY3R1cmUtY2hlcnJ5d29yay1kZXYuYXV0aGVudGljYXRpb24uZXUxMC5oYW5hLm9uZGVtYW5kLmNvbS90b2tlbl9rZXlzIiwia2lkIjoiZGVmYXVsdC1qd3Qta2V5LTE2ODYxOTc1NzMiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzYi1uYS00YmU5MDM1Mi0zMzY1LTQyOWYtOTg2My1hYzVjYmQwZjExNmEhdDE5NzgwNiIsImlzcyI6Imh0dHBzOi8vaW5jdHVyZS1jaGVycnl3b3JrLWRldi5hdXRoZW50aWNhdGlvbi5ldTEwLmhhbmEub25kZW1hbmQuY29tL29hdXRoL3Rva2VuIiwiYXV0aG9yaXRpZXMiOlsidWFhLnJlc291cmNlIl0sImNsaWVudF9pZCI6InNiLW5hLTRiZTkwMzUyLTMzNjUtNDI5Zi05ODYzLWFjNWNiZDBmMTE2YSF0MTk3ODA2IiwiYXVkIjpbInVhYSIsInNiLW5hLTRiZTkwMzUyLTMzNjUtNDI5Zi05ODYzLWFjNWNiZDBmMTE2YSF0MTk3ODA2Il0sImV4dF9hdHRyIjp7ImVuaGFuY2VyIjoiWFNVQUEiLCJzdWJhY2NvdW50aWQiOiJkMzM0YTE2Ny1jYWMwLTQ5MDItYjE3Yy1jZTA2ZDY3ODBlMDUiLCJ6ZG4iOiJpbmN0dXJlLWNoZXJyeXdvcmstZGV2In0sInppZCI6ImQzMzRhMTY3LWNhYzAtNDkwMi1iMTdjLWNlMDZkNjc4MGUwNSIsImdyYW50X3R5cGUiOiJjbGllbnRfY3JlZGVudGlhbHMiLCJhenAiOiJzYi1uYS00YmU5MDM1Mi0zMzY1LTQyOWYtOTg2My1hYzVjYmQwZjExNmEhdDE5NzgwNiIsInNjb3BlIjpbInVhYS5yZXNvdXJjZSJdLCJleHAiOjE3OTUyMTI2MTIsImlhdCI6MTc5NTE2OTQxMiwianRpIjoiNWQxOTI4ZTc3YjM3NGE4OTg2NThmNzU5ZmJhYmI2NGMiLCJyZXZfc2lnIjoiOGZmZDc1MDAiLCJjaWQiOiJzYi1uYS00YmU5MDM1Mi0zMzY1LTQyOWYtOTg2My1hYzVjYmQwZjExNmEhdDE5NzgwNiJ9.cElR3U-txDWCHOG4Y1rQgL78VPVkE0xJwpeh660seWoc1XMRbTowm3QvDpsRP-vSfTlEesU8J86TSpJmjQkfkO39k4xhrJ50xM-OIxgqK0yS1HUnIszcYoD-9CSgznqQEvmSNstig49qym3h_FCkBZd-INAVdNJfwLL4ZYg8iGE1qrdBzEAbtaJfGrB2wFCf2Yte_Fs4AO8LVImFU1LIEVHBf0frQNuPeFHvox05jOSGfhpLUAw95C60lg33Z1p91ISUTHCh4w0V5-ujB7cNZM5PSNCt-VcX8R2_zWiTj9Ce_oBWOME-LEi7E7WlGEA4LJ9NccGzI_E7Kf5iwERCRw"
+
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
         port: 35729
         path: webapp
         delay: 300
+
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:
         flp:
           theme: sap_horizon
+
 builder:
   resources:
     excludes:
